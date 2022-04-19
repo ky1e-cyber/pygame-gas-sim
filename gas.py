@@ -2,11 +2,9 @@ import pygame, sys, random, math
 from pygame.locals import *
 
 random.seed()
-
-
-
 pygame.init()
 clock = pygame.time.Clock()
+
 W_SIZE = (1600, 900)
 screen = pygame.display.set_mode(W_SIZE, 0, 32)
 display_surf = pygame.Surface((960, 540))
@@ -105,38 +103,18 @@ for j in range(500):
     mol_list.append(Molecule(random.randint(container[2].x + TILE_SIZE, container[3].x - TILE_SIZE), random.randint(container[0].y + TILE_SIZE, container[1].y - TILE_SIZE), sq_v, random.randint(0, 360), m))
 
 
-while True:
-    delta_time = clock.tick(30) / 100
-    display_surf.fill((146,244,255))
-    cont_render(container, (0, 180, 46), display_surf)
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-    sorted_mol_lists = [[] for i in range(SORT_RES + 2)]
-    for mol in mol_list:
-        mol.tick(delta_time)
-        mol.render(display_surf)
-    pygame.transform.scale(display_surf, W_SIZE, screen)
-    pygame.display.update()
-
-def run():
+if __name__ == "__main__":
     while True:
         delta_time = clock.tick(30) / 100
         display_surf.fill((146,244,255))
         cont_render(container, (0, 180, 46), display_surf)
         for event in pygame.event.get():
             if event.type == QUIT:
-                return
+                pygame.quit()
+                sys.exit()
         sorted_mol_lists = [[] for i in range(SORT_RES + 2)]
         for mol in mol_list:
             mol.tick(delta_time)
             mol.render(display_surf)
         pygame.transform.scale(display_surf, W_SIZE, screen)
         pygame.display.update()
-
-
-if __name__ == "__main__":
-    run()
-    pygame.quit()
-    sys.exit()
